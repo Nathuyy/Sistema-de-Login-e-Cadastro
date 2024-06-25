@@ -4,8 +4,9 @@ const controllers = require('../controllers/controllers');
 const middlewares = require('../middleware/middlewares');
 
 
-router.get('/' , controllers.Void);
-router.post('/register',middlewares.VerifyEmail, controllers.register);
-router.post('/login', controllers.login);
+router.get('/users' , controllers.getAllUsers);
+router.post('/register', controllers.registerUser);
+router.delete('/users/:id', controllers.deleteUser);
+// router.post('/login', controllers.login);
 
 module.exports = router

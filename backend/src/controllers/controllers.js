@@ -1,36 +1,24 @@
-const db = require('../models/connection')
-const bcrypt = require('bcryptjs')
+const userModels = require('../models/userModels');
 
+const getAllUsers = async (req, res) => {
+    const users = await userModels.getAllUsers();   
+    res.status(200).json(users);
+};
 
-// const validatePassword = (password) => { //passar para o middleware? SIM, enviar para o middleware, ele não retorna nada além de um next
-//     const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/
-//     return passwordRegex.test(password);
-// };
-
-
-const register = async (req, res) => {
-
-    const { username, email, password } = req.body
-    return res.status(200).json({ message: username, email, password })
+const registerUser = async (req, res) => {
+    const newUser = await userModels.registerUser(req.body);
+    res.status(201).json(newUser);
 }
 
+const deleteUser = async (req, res) => {
+    const { id } = req.params;
 
-
-const login = async (req, res) => {
-    return res.status(200).json({ message: 'fazer login!' })
-    //comparar se email existe, após verificar se o email existe verificar se a senha (ja cripiada) bate com a senha (encriptada)
-    //o bcrypt vai comparar a senha e a criptografia com uma função dele própria,
-
-
+    await userModels.deleteUser(id);
+    return res.status(204).json();
 }
-
-const Void = async (req, res) => {
-    return res.status(200).json({ message: 'Servidor funcionando corretamente!' })
-}
-
 
 module.exports = {
-    Void,
-    login,
-    register
-}
+    getAllUsers,
+    registerUser,
+    deleteUser
+};
