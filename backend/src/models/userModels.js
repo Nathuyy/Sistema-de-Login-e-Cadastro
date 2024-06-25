@@ -13,7 +13,7 @@ const registerUser = async (user) => {
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const query = 'INSERT INTO users (username, email, password, created_at) VALUES (?, ?, ?, ?)'
-    const [result] = await connection.execute(query, [username, email, hashedPassword, dateUTC]);
+    const [result] = await connection.execute(query, [username, email, hashedPassword, dateUTC])
 
     return {
         id: result.insertId,
@@ -33,10 +33,10 @@ const loginUser = async (user) => {
     }
 
     const userRecord = result[0];
-    const passwordMatch = await bcrypt.compare(password, userRecord.password);
+    const passwordMatch = await bcrypt.compare(password, userRecord.password)
 
     if (!passwordMatch) {
-        throw new Error('Email ou senha são inválidos');
+        throw new Error('Email ou senha são inválidos')
     }
 
     return `logado com sucesso: ${userRecord.username}`
@@ -44,7 +44,7 @@ const loginUser = async (user) => {
 
 
 const deleteUser = async (id) => {
-    const removeUser = await connection.execute('DELETE FROM users WHERE id = ?', [id]);
+    const removeUser = await connection.execute('DELETE FROM users WHERE id = ?', [id])
     return removeUser
 }
 

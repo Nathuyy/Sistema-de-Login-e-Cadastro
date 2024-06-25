@@ -1,24 +1,24 @@
-const userModels = require('../models/userModels');
+const userModels = require('../models/userModels')
 
 const getAllUsers = async (req, res) => {
-    const users = await userModels.getAllUsers();   
-    res.status(200).json(users);
+    const users = await userModels.getAllUsers()
+    res.status(200).json(users)
 };
 
 const registerUser = async (req, res) => {
-    const newUser = await userModels.registerUser(req.body);
-    res.status(201).json(newUser);
+    const newUser = await userModels.registerUser(req.body)
+    res.status(201).json(newUser)
 }
 
 const deleteUser = async (req, res) => {
     const { id } = req.params;
 
-    await userModels.deleteUser(id);
-    return res.status(204).json();
+    await userModels.deleteUser(id)
+    return res.status(204).json()
 }
 
 const loginUser = async (req, res) => { 
-    const login = await userModels.loginUser(req.body);
+    const login = await userModels.loginUser(req.body)
     res.json(login);
 }
 
