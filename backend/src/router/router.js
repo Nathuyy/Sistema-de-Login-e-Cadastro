@@ -7,6 +7,8 @@ const middlewares = require('../middleware/middlewares');
 router.get('/users' , controllers.getAllUsers);
 router.post('/register', controllers.registerUser);
 router.delete('/users/:id', controllers.deleteUser);
-// router.post('/login', controllers.login);
+router.post('/login', controllers.loginUser);
+router.put('/users/:id', controllers.uptadeUser);
+
 
 module.exports = router
