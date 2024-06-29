@@ -29,9 +29,9 @@ const VerifyLogin = async (req, res, next) => {
 };
 
 const middlewareCheckId = async (req, res, next) => {
-    const checkID = req.params.id;
+    const checkID = parseInt(req.params.id);
 
-    if (checkID === "1" || checkID === "2") {
+    if (checkID == 1 || checkID == 2) { 
         next();
     } else {
         return res.status(400).json({ message: "Você não é um administrador" });

@@ -1,8 +1,9 @@
-const connection = require('./connection');
-const bcrypt = require('bcryptjs');
+
+const connection = require('./connection')
+const tools = require('../tools/tools')
 
 const getAllUsers = async () => {
-    const [users] = await connection.execute('SELECT * FROM users');
+    const [users] = await connection.execute('SELECT * FROM users')
     return users;
 }
 
@@ -10,7 +11,7 @@ const registerUser = async (user) => {
     const { username, email, password } = user;
     const dateUTC = new Date(Date.now()).toISOString().slice(0, 19).replace('T', ' '); // Formato MySQL DATETIME
 
-    const hashedPassword = await bcrypt.hash(password, 10);
+    const hashedPassword = await tools.hashPassword(password);
 
     const query = 'INSERT INTO users (username, email, password, created_at) VALUES (?, ?, ?, ?)'
     const [result] = await connection.execute(query, [username, email, hashedPassword, dateUTC])
@@ -43,17 +44,22 @@ const loginUser = async (user) => {
 }
 
 
-const deleteUser = async (id) => {
-    const removeUser = await connection.execute('DELETE FROM users WHERE id = ?', [id])
+const deleteUser = async (idUser) => {
+    const removeUser = await connection.execute('DELETE FROM users WHERE id = ?', [idUser])
     return removeUser
 }
 
 const uptadeUser = async (id, user) => {
     const { username, email, password } = user
 
+    const hashedPassword = await tools.hashPassword(password);
+
+
     const query = 'UPDATE users SET username = ?, email = ?, password = ? WHERE id = ?';
 
-    const [uptadedUser] = await connection.execute(query, [username, email, password, id])
+
+
+    const [uptadedUser] = await connection.execute(query, [username, email, hashedPassword, id])
     return uptadedUser
 }
 

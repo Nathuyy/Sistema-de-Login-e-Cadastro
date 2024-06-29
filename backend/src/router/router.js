@@ -5,7 +5,7 @@ const { middlewareCheckId, VerifyLogin, VerifyEmail } = require('../middleware/m
 
 router.get('/users/:id', middlewareCheckId, controllers.getAllUsers);
 router.post('/register', VerifyEmail, controllers.registerUser);
-router.delete('/removerproduto/:id/remover/:idproduto', middlewareCheckId, controllers.removerProduto);
+router.delete('/deleteUser/:id/remove/:idUser', middlewareCheckId, controllers.deleteUser);
 router.post('/login', VerifyLogin, controllers.loginUser);
 router.put('/users/:id', controllers.uptadeUser);
 
